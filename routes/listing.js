@@ -9,26 +9,22 @@ const listingcontroller = require("../controllers/listing.js");
 
 router.use(methodOverride("_method"));
 
-router.get("" , listingcontroller.renderHome);
+router
+.route("/")
+.get(listingcontroller.renderHome)        //root route
+.post(listingcontroller.createListing);   //create route
 
 //New route
 router.get("/new",isLoggedIn , (req , res) => {
   res.render("new.ejs");
 });
-  
-  //Create Route
-  router.post("", listingcontroller.createListing);
-  
-  //Show Route
-  router.get("/:id", listingcontroller.renderShow);
-  
-  //Edit Route...
-  router.get("/:id/edit", isLoggedIn , listingcontroller.renderEdit);
-  
-  router.post("/:id" , listingcontroller.editListing);
 
-  //Delete Route
-// Delete Route
-router.delete("/:id", listingcontroller.destroyListing);
+router.route("/:id")
+.get(listingcontroller.renderShow)            //show route
+.post(listingcontroller.editListing)          //edit route
+.delete(listingcontroller.destroyListing);    // Delete Route
+
+//Edit Route...
+router.get("/:id/edit", isLoggedIn , listingcontroller.renderEdit);
 
 module.exports = router;
