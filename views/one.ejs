@@ -1,0 +1,149 @@
+<% layout("./layouts/boilerplate") %>
+
+<style>
+    .card{
+        width: 500px;
+        border-radius: 8px;
+        border: none;
+        margin-left: 300px;
+    }
+    .card-img-top{
+        border-radius: 8px;
+        height: 300px;
+        width: 500px;
+    }
+    .card p{
+        font-size: 18px;
+        margin-left: 0px;
+    }
+    .title{
+        margin-left: 300px;
+    }
+    .edit{
+        border-radius: 8px;
+        border: none;
+        background-color: black;
+        color: white;
+        height: 35px;
+        width: 70px;
+    }
+    .delete{
+        border-radius: 8px;
+        border: none;
+        background-color: rgb(198, 18, 18);
+        color: white;
+        margin-left: 15px;
+        height: 35px;
+        width: 70px;
+    }
+    .btn{
+        display: flex;
+        margin-left: 280px;
+    }
+    .card-body{
+        padding: 0%;
+        margin-top: 10px;
+    }
+    .review{
+        position: relative;
+        right: 20px;
+    }
+    .form-range {
+        width: 100%;
+    }
+    #rating{
+        position: relative;
+        bottom : 25px;
+    }
+    .comment{
+        position: relative;
+        bottom : 30px;
+    }
+    #comment{
+        position: relative;
+        bottom : 30px;
+    }
+    .reviewbtn{
+        position: relative;
+        bottom: 45px;
+        right: 280px;
+    }
+    .revcard{
+        border: solid 1px rgb(176, 174, 174);
+        border-radius: 15px;
+    }
+    .cardrev{
+        padding-left: 0%;
+    }
+    .delbtn{
+        position: relative;
+        right: 285px;
+        bottom: 8px;
+    }
+</style>
+<body>
+    <div class="container">
+        <h2 class="title">Listing detail</h2>
+    <div class="card" >
+        <img src="<%= listing.image %>" class="card-img-top" alt="image">
+        <div class="card-body">
+            <p>Owned by <i><%= listing.owner.username %></i></p>
+            <p><b><%= listing.title %></b></p>
+            <p><%= listing.description %></p>
+            <p>&#x20B9; <%= formatPrice(listing.price) %></p>
+            <p><%= listing.location %></p>
+            <p><%= listing.country %></p>
+        </div>
+    </div>
+    <% if(curUser && curUser._id.equals(listing.owner._id)){  %>
+    <div class="btn">
+        <form  method="get" action="/listing/<%= listing._id %>/edit">
+            <button class="edit">Edit</button>
+        </form><br>
+        <form method="POST" action="http://localhost:8080/listing/<%= listing._id %>?_method=DELETE">
+            <button class="delete">Delete</button>
+        </form>
+    </div>
+    <% } %>
+    </div>
+
+    <div class="review col-6 offset-4 mb-3 mt-3">
+        <hr>
+        <% if(curUser){ %>
+        <h3>Leave a Review</h3>
+        <form action="/listing/<%= listing._id %>/reviews" method="post" >
+            <div class="rating mb-3 mt-3">
+                <p>Rating</p>
+                <label for="rating" class="form-label"></label>
+                <input type="range" id="rating" min="1" max="5" name="review[rating]" class="form-range">
+            </div>
+            <div class="comment mb-3 mt-3">
+                <p>Comment</p>
+                <label for="comment" class="form-label"></label>
+                <textarea name="review[comment]" id="comment" cols="15" rows="4" class="form-control"></textarea>
+            </div>
+            <button class="reviewbtn btn btn-outline-dark" type="submit">submit</button>
+        </form>
+        <% } %>
+        <hr>
+        <p><b>All Reviews</b></p>
+        <ul>
+            <div class="row">
+                <% for(review of listing.reviews) { %>
+                    <div class="revcard col-6 mb-3">
+                        <div class="card-body cardrev">
+                        <h5 class="card-title"><%= review.author.username %></h5>
+                        <p class="card-text"><%= review.rating %>stars</p>
+                        <p class="card-text"><%= review.comment %></p>
+                        <% if (curUser && curUser._id.equals(review.author._id)){ %>
+                        <form method="post" action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=delete" >
+                            <button class="btn btn-sm btn-dark delbtn">Delete</button>
+                        </form>
+                        <% } %>
+                        </div>
+                    </div>
+                <% } %>  
+            </div>
+        </ul>
+    </div>
+</body>

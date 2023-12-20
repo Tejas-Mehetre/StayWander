@@ -1,0 +1,124 @@
+.div6feedback{
+    position: relative;
+    bottom: 50px;
+}
+#homepage {
+    width: 100% !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+.cards {
+    border-radius: 10px;
+}
+.card-img-top {
+    border-radius: 7px;
+    height: 300px;
+}
+.card {
+    border: none;
+    width: 300px;
+    height: 420px;
+    margin-bottom: 25px;
+}
+.card-text {
+    color: black;
+}
+.card a {
+    text-decoration: none !important; /* Remove underline for anchor tags within the card */
+    color: inherit; /* Inherit text color from the card */
+}
+.card:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.card-img-overlay{
+    opacity: 0;
+    padding-left: 0px !important;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+.card-body{
+    padding-left: 0px !important;
+    padding-top: 0px !important;
+    margin-top: 8px;
+}
+.card{
+    width: 500px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 300px;
+}
+.card-img-top{
+    border-radius: 8px;
+    height: 300px;
+    width: 500px;
+}
+.card p{
+    font-size: 18px;
+    margin-left: 0px;
+}
+.title{
+    margin-left: 300px;
+}
+.edit{
+    border-radius: 8px;
+    border: none;
+    background-color: black;
+    color: white;
+    height: 35px;
+    width: 70px;
+}
+.delete{
+    border-radius: 8px;
+    border: none;
+    background-color: rgb(198, 18, 18);
+    color: white;
+    margin-left: 15px;
+    height: 35px;
+    width: 70px;
+}
+.btn{
+    display: flex;
+    margin-left: 280px;
+}
+.card-body{
+    padding: 0%;
+    margin-top: 10px;
+}
+.review{
+    position: relative;
+    right: 20px;
+}
+.form-range {
+    width: 100%;
+}
+#rating{
+    position: relative;
+    bottom : 25px;
+}
+.comment{
+    position: relative;
+    bottom : 30px;
+}
+#comment{
+    position: relative;
+    bottom : 30px;
+}
+.reviewbtn{
+    position: relative;
+    bottom: 45px;
+    right: 280px;
+}
+.revcard{
+    border: solid 1px rgb(176, 174, 174);
+    border-radius: 15px;
+}
+.cardrev{
+    padding-left: 0%;
+}
+.delbtn{
+    position: relative;
+    right: 285px;
+    bottom: 8px;
+}
