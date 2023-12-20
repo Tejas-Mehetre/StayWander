@@ -10,8 +10,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const listingrouter = require("./routes/listing.js");
 const reviewrouter = require("./routes/review.js");
-const userrouter = require("./routes/user.js");
-
+const userrouter = require("./routes/user.js") ;
 const session = require("express-session");
 const flash = require("connect-flash");
 
