@@ -77,6 +77,14 @@
     right: 285px;
     bottom: 8px;
 }
+
+/* Map */
+#map {
+  height: 400px;
+  width: 80vh;
+}
+
+/* Ratings */
 .starability-result {
     position: relative;
     width: 150px;

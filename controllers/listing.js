@@ -1,5 +1,7 @@
 let listing = require("../models/listing.js");
-const listings = require("../routes/listing.js");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const maptoken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: maptoken });
 
 function formatPrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -11,18 +13,25 @@ module.exports.renderHome = async(req , res) => {
 }
 
 module.exports.createListing = async (req, res) => {
-    try {
+      let response = await geocodingClient
+      .forwardGeocode({
+        query: req.body.location,
+        limit: 1
+      })
+        .send();
+
+      let url = req.file.path;
+      let filename = req.file.filename;
       const { title, description,image, price, location, country } = req.body;
       const newListing = new listing({ title, description,image, price, location, country });
       newListing.owner = req.user._id;
-      await newListing.save();
+      newListing.image = {url , filename};
+      newListing.geometry = response.body.features[0].geometry;
+      let savedlisting = await newListing.save();
+      console.log(savedlisting);
       req.flash("success" , "New listing Created");
       res.redirect("/listing");
-    } catch (error) {
-      console.error("Error creating a new listing:", error);
-      res.status(500).send("An error occurred while creating the new listing");
-    }
-  }
+}
 
 module.exports.renderShow = async (req, res) => {
     try {
@@ -58,7 +67,14 @@ module.exports.editListing = async(req,res) =>{
       let id = req.params.id;
       
       const newListing1 = await listing.updateMany({ _id: id }, { title, description,image , price, location, country });
-      console.log(newListing1);
+      
+      if(typeof req.file !== "undefined"){
+        let url = req.file.path;
+        let filename = req.file.filename;
+        newListing1.image = {url , filename};
+        await newListing1.save();
+      }
+
       req.flash("success" , "Listing Updated Successfully");
       res.redirect("/listing/"+id); 
     } catch (error) {

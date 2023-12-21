@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 const Review = require("./review");
 const user = require("./user");
+const urlencoded = require("body-parser/lib/types/urlencoded");
 
 const listingSchema = new schema({
     title : {
@@ -10,10 +11,8 @@ const listingSchema = new schema({
     },
     description : String,
     image : {
-        type : String,
-        default : "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1948&q=80",
-        set : (v) =>
-        v === "" ? "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1948&q=80" : v,
+        url: String,
+        filename: String,
     },
     price : Number,
     location : String,
@@ -26,6 +25,17 @@ const listingSchema = new schema({
         type : schema.Types.ObjectId,
         ref : "user",
     },
+    geometry: {
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+            required: true
+          },
+        coordinates: {
+            type: [Number],
+            required: true
+          }
+    }
 });
 
 module.exports = mongoose.model('listing', listingSchema);

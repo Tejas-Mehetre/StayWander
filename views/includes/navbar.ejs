@@ -1,52 +1,28 @@
-<style>
-    .navbar-brand {
-            font-size: 25px;
-            color: rgb(198, 18, 18);
-        }
-        .nav-link {
-            font-size: 18px;
-            color: rgb(39, 39, 39) !important;
-            margin-left: 10px;
-        }
-        .nav-link:hover{
-          color: black !important;
-        }
-        .navbar {
-            background-color: rgb(255, 255, 255);
-            height: 80px;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-        }
-        .custom-container {
-            margin: 0; 
-            padding: 0; 
-        }
-        .user i{
-          font-size: 25px;
-          color: black;
-          margin-left: 1050px;
-          margin-top: 10px;
-        }
-</style>
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/"><i class="fa-solid fa-ribbon"></i></a>
+      <a class="navbar-brand" href="/listing"><i class="fa-solid fa-ribbon"></i></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <a style="font-weight: bold;" class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="/listing">All Listings</a>
-        <a class="nav-link" href="/listing/new">Add new Listing</a>
+        <a class="nav-link" href="/listing">Explore</a>
+      </div>
+      <div class="searchbar navbar-nav">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2 search-input" type="search" placeholder="Search destination" aria-label="Search">
+          <button class="btn btn-search btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
       </div>
     </div>
+    
+    <a class="anav nav-link" href="/listing/new">Airbnb your home</a>
     <div class="collapse navbar-collapse" id="navbarNav">
       <% if(!curUser){ %>
-        <a class="nav-link" href="/signup">SignUp</a>
-      <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/signup"><b>SignUp</b></a>
+      <a class="nav-link" href="/login"><b>Login</b></a>
       <% } %>
       <% if(curUser){ %>
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="/logout"><b>Logout</b></a>
         <% } %>
     </div>
   </div>

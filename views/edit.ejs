@@ -1,6 +1,8 @@
 <% layout("./layouts/boilerplate") %>
+
+<link rel="stylesheet" href="/boiler.css">
 <body>
-    <form method="post" action="/listing/<%= editLisiting._id %>" class="needs-validation" novalidate>
+    <form method="post" action="/listing/<%= editLisiting._id %>" class="needs-validation" novalidate enctype="multipart/form-data">
         <div class="row container">
             <div class="col-8 offset-4">
                 <div class="div1 mb-3 mt-3">
@@ -17,9 +19,13 @@
                         Please enter description
                     </div>
                 </div>
+                <div class="mb-3">
+                    <p>Original Image</p>
+                    <img style="height: 250px;width: 330px;border-radius: 10px;" src="<%= editLisiting.image.url %>" alt="img">
+                </div>
                 <div class="div3 mb-3">
-                    <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" name="image" value="<%= editLisiting.image %>" required>
+                    <label for="image" class="form-label">Upload New Image</label>
+                    <input type="file" class="form-control" name="image">
                 </div>
                 <div class="row">
                     <div class="div4 mb-3 col-md-4">

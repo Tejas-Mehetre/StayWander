@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV != "production"){
+  require('dotenv').config();
+}
 const express = require("express");
 let app = express();
 let port = 8080;
@@ -6,12 +9,14 @@ let mongoose = require("mongoose");
 let listing = require("./models/listing.js");
 const bodyParser = require("body-parser");
 let path = require("path");
+const session = require("express-session");
+const MongoStore = require("connect-mongo"); 
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const listingrouter = require("./routes/listing.js");
 const reviewrouter = require("./routes/review.js");
 const userrouter = require("./routes/user.js") ;
-const session = require("express-session");
+
 const flash = require("connect-flash");
 
 let passport = require("passport");
@@ -25,15 +30,30 @@ app.use(bodyParser.json());
 app.engine("ejs" , ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
+const dburl = process.env.ATLSDB_URL;
+
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  crypto: {
+    secret: process.env.SECRET_KEY,
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", ()=>{
+  console.log("ERROR in MONGO STORE ",err);
+});
+
 let sessionOptions = {
-  secret : "mysupersecretstring" ,
-  resave : false , 
-  saveUninitialized : true,
+  store,
+  secret: process.env.SECRET_KEY,
+  resave: false,
+  saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxage: 7 * 24 * 60 * 60 * 1000,
-    httponly: true,
-  }
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
 };
 
 app.use(session(sessionOptions));
@@ -59,7 +79,7 @@ main()
 })  .catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+  await mongoose.connect(dburl);
 };
 
 //listen
@@ -68,9 +88,7 @@ app.listen(port , () =>{
 });
 
 //root route
-app.get("/" , (req, res)=>{
-    res.send("Server working");
-});
+
 
 app.get("/demouser" , async(req , res) => {
   let fakeuser = new user({

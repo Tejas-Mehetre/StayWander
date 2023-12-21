@@ -1,7 +1,8 @@
 <% layout("./layouts/boilerplate") %>
 
+<link rel="stylesheet" href="/boiler.css">
 <body>
-    <form class="newform needs-validation" method="post" action="/listing" novalidate>
+    <form class="newform needs-validation" method="post" action="/listing" novalidate enctype="multipart/form-data">
         <div class="row container">
             <div class="col-8 offset-4">
                 <div class="div1 mb-3 mt-3">
@@ -20,7 +21,7 @@
                 </div>
                 <div class="div3 mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" class="form-control" name="image" placeholder="enter img URL/link">
+                    <input type="file" class="form-control" name="image" required>
                 </div>
                 <div class="row">
                     <div class="div4 mb-3 col-md-4 ">
